@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SONA-MONI ELECTRONICS | Premium Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --glass: rgba(255, 255, 255, 0.05); --border: rgba(255, 255, 255, 0.1); --text: #f8fafc; }
+        .light-mode { --glass: rgba(0, 0, 0, 0.05); --border: rgba(0, 0, 0, 0.1); --text: #1e293b; background: #f1f5f9 !important; color: #1e293b !important; }
+        
+        body { font-family: 'Hind Siliguri', sans-serif; background: #0a0f1d; color: var(--text); transition: 0.4s; overflow-x: hidden; }
+        .glass { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 24px; }
+        
+        /* Slider */
+        .slider-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; }
+        .slider-container::-webkit-scrollbar { display: none; }
+        .slide { min-width: 100%; scroll-snap-align: start; position: relative; }
+        
+        /* Product Card */
+        .product-card { background: white; border-radius: 20px; color: black; transition: 0.3s; position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .product-card:hover { transform: translateY(-5px); }
+        
+        .discount-badge { position: absolute; top: 10px; left: 10px; background: #22c55e; color: white; padding: 2px 8px; border-radius: 8px; font-size: 10px; font-weight: bold; z-index: 10; }
+        
+        /* Floating WhatsApp */
+        .floating-whatsapp { position: fixed; bottom: 25px; right: 25px; background: #25d366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 100; box-shadow: 0 8px 20px rgba(0,0,0,0.3); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { transform: scale(1); } }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="pb-24">
+
+    <header class="sticky top-0 z-[60] p-4 glass rounded-none border-0 flex justify-between items-center px-6">
+        <div class="flex items-center gap-3">
+            <img src="https://i.ibb.co.com/ZznkCTF4/file-000000008fb071fa97d24f0fe5fe7942.png" alt="Logo" class="w-10 h-10 rounded-full object-cover border border-blue-400">
+            <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300">SONA-MONI</h1>
+        </div>
+        <button onclick="document.body.classList.toggle('light-mode')" class="p-2 glass rounded-full">🌓</button>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-4">
+        
+        <section id="bannerSlider" class="slider-container w-full h-48 md:h-72 rounded-[30px] overflow-hidden mb-8 glass border-0 shadow-2xl">
+            </section>
+
+        <div class="relative mb-8">
+            <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="প্রোডাক্ট খুঁজুন..." class="w-full glass p-5 pl-12 outline-none text-sm border-0">
+            <span class="absolute left-5 top-5 opacity-50">🔍</span>
+        </div>
+
+        <div id="categoryContainer" class="flex gap-3 overflow-x-auto pb-4 mb-4 no-scrollbar">
+            <button onclick="window.filterItems('')" class="glass px-6 py-2 whitespace-nowrap text-xs font-bold hover:bg-blue-600 transition">সব পণ্য</button>
+            </div>
+
+        <div id="productGrid" class="grid grid-cols-2 md:grid-cols-4 gap-5">
+            </div>
+    </main>
+
+    <a href="https://wa.me/8801959717502?text=আমি%20আপনার%20SONA-MONI%20ELECTRONICS%20থেকে%20এসেছি।" class="floating-whatsapp" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" class="w-9 h-9">
+    </a>
+
+    <div id="orderModal" class="fixed inset-0 z-[100] hidden flex items-end md:items-center justify-center bg-black/80 backdrop-blur-md">
+        <div class="glass w-full max-w-md p-8 rounded-t-[40px] md:rounded-[40px] relative">
+            <h2 class="text-2xl font-bold mb-1 text-blue-400">অর্ডার কনফার্ম করুন</h2>
+            <p id="targetName" class="text-sm opacity-70 mb-6"></p>
+            
+            <form id="orderForm" class="space-y-4">
+                <input type="text" id="uName" required placeholder="আপনার নাম" class="w-full glass p-4 outline-none border-0 text-sm">
+                <input type="number" id="uQty" required min="1" placeholder="কত পিস লাগবে?" class="w-full glass p-4 outline-none border-0 text-sm">
+                <input type="tel" id="uPhone" required placeholder="মোবাইল নম্বর" class="w-full glass p-4 outline-none border-0 text-sm">
+                <input type="tel" id="uWa" required placeholder="WhatsApp নম্বর" class="w-full glass p-4 outline-none border-0 text-sm">
+                <textarea id="uAddr" required placeholder="পূর্ণ ঠিকানা (গ্রাম/পাড়া, থানা, জেলা)" class="w-full glass p-4 h-20 outline-none border-0 text-sm"></textarea>
+                
+                <button type="submit" id="submitBtn" class="w-full bg-blue-600 py-4 rounded-2xl font-bold text-lg active:scale-95 transition">অর্ডার সম্পন্ন করুন</button>
+                <button type="button" onclick="closeModal()" class="w-full text-center py-2 opacity-50 text-xs">বন্ধ করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, query } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDo1jmjdEne0Vdx7i0Ospot38wLv9Zz4oo",
+            authDomain: "sonamoni-b3c3d.firebaseapp.com",
+            projectId: "sonamoni-b3c3d",
+            storageBucket: "sonamoni-b3c3d.firebasestorage.app",
+            messagingSenderId: "1054792405512",
+            appId: "1:1054792405512:web:c4950897db2966b43eb7bd"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        let activeCat = '';
+
+        // Banners
+        onSnapshot(collection(db, "banners"), (snap) => {
+            const s = document.getElementById('bannerSlider');
+            s.innerHTML = '';
+            snap.forEach(d => {
+                s.innerHTML += `<div class="slide"><img src="${d.data().url}" class="w-full h-full object-cover"></div>`;
+            });
+        });
+
+        // Categories
+        onSnapshot(collection(db, "categories"), (snap) => {
+            const c = document.getElementById('categoryContainer');
+            c.innerHTML = '<button onclick="window.filterItems(\'\')" class="glass px-6 py-2 whitespace-nowrap text-xs font-bold hover:bg-blue-600 transition">সব পণ্য</button>';
+            snap.forEach(d => {
+                const name = d.data().name;
+                c.innerHTML += `<button onclick="window.filterItems('${name}')" class="glass px-6 py-2 whitespace-nowrap text-xs font-bold hover:bg-blue-600 transition">${name}</button>`;
+            });
+        });
+
+        // Products
+        onSnapshot(query(collection(db, "products")), (snapshot) => {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            snapshot.forEach((doc) => {
+                const p = doc.data();
+                const disc = p.oldPrice ? Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100) : 0;
+                grid.innerHTML += `
+                    <div class="product-card" data-name="${p.name.toLowerCase()}" data-category="${p.category}">
+                        ${disc > 0 ? `<div class="discount-badge">-${disc}% ছাড়</div>` : ''}
+                        <div class="h-40 bg-gray-50 flex items-center justify-center p-3">
+                            <img src="${p.img}" class="h-full object-contain mix-blend-multiply">
+                        </div>
+                        <div class="p-4 bg-white">
+                            <h3 class="text-sm font-bold truncate text-slate-800">${p.name}</h3>
+                            <div class="text-blue-600 font-bold text-lg mt-1">৳ ${p.price}</div>
+                            <button onclick="window.triggerOrder('${p.name}')" class="w-full bg-slate-900 text-white mt-3 py-2.5 rounded-xl text-xs font-bold">অর্ডার দিন</button>
+                        </div>
+                    </div>`;
+            });
+        });
+
+        window.filterItems = (c = '') => {
+            activeCat = c;
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.product-card').forEach(card => {
+                const matchesSearch = card.dataset.name.includes(q);
+                const matchesCat = activeCat === '' || card.dataset.category === activeCat;
+                card.style.display = (matchesSearch && matchesCat) ? 'block' : 'none';
+            });
+        };
+
+        window.triggerOrder = (n) => {
+            document.getElementById('targetName').innerText = "পণ্য: " + n;
+            document.getElementById('orderModal').classList.remove('hidden');
+        };
+
+        window.closeModal = () => document.getElementById('orderModal').classList.add('hidden');
+
+        // Order Submit to Telegram
+        document.getElementById('orderForm').onsubmit = (e) => {
+            e.preventDefault();
+            const b = document.getElementById('submitBtn');
+            b.innerText = "অর্ডার পাঠানো হচ্ছে...";
+            b.disabled = true;
+
+            const text = `🛍️ **নতুন অর্ডার (SONA-MONI)**\n━━━━━━━━━━━━\n📦 পণ্য: ${document.getElementById('targetName').innerText}\n🔢 পরিমাণ: ${document.getElementById('uQty').value} পিস\n👤 নাম: ${document.getElementById('uName').value}\n📞 ফোন: ${document.getElementById('uPhone').value}\n💬 WhatsApp: ${document.getElementById('uWa').value}\n📍 ঠিকানা: ${document.getElementById('uAddr').value}\n━━━━━━━━━━━━`;
+
+            fetch(`https://api.telegram.org/bot8722605379:AAEXYRuqomVubbWkM2s3l_0mnYomZ0u9jk4/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: "6045231271", text: text, parse_mode: 'Markdown' })
+            }).then(() => {
+                alert("অর্ডার সফলভাবে পাঠানো হয়েছে!");
+                closeModal();
+                b.innerText = "অর্ডার সম্পন্ন করুন";
+                b.disabled = false;
+                document.getElementById('orderForm').reset();
+            });
+        };
+
+        // Auto Slider
+        setInterval(() => {
+            const s = document.getElementById('bannerSlider');
+            if(s.scrollLeft >= (s.scrollWidth - s.clientWidth)) s.scrollTo({left: 0, behavior: 'smooth'});
+            else s.scrollBy({left: s.clientWidth, behavior: 'smooth'});
+        }, 5000);
+    </script>
+</body>
+</html>
