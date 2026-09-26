@@ -36,7 +36,7 @@
 </head>
 <body class="pb-24">
 
-    <!-- Header Update: Only Logo -->
+    <!-- Header -->
     <header class="sticky top-0 z-[60] p-3 glass rounded-none border-0 flex justify-between items-center px-6 backdrop-blur-xl shadow-sm">
         <div class="flex items-center">
             <img src="https://i.ibb.co.com/PGtpvz3f/EA975-D03-CDA9-4-A59-8-DB4-5-E217-F8-B2586.png" alt="Orderdeo Logo" class="h-12 md:h-14 w-auto object-contain drop-shadow-md">
@@ -77,7 +77,7 @@
     <!-- Floating Call Button -->
     <a href="tel:01700000000" class="floating-call">📞</a>
 
-    <!-- Order Modal (Updated with new fields) -->
+    <!-- Order Modal -->
     <div id="orderModal" class="fixed inset-0 z-[100] hidden flex items-end md:items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity">
         <div class="glass w-full max-w-lg p-6 md:p-8 rounded-t-[30px] md:rounded-[30px] relative max-h-[90vh] overflow-y-auto modal-scroll shadow-2xl border border-white/10">
             
@@ -225,7 +225,7 @@
             });
         };
 
-        // 4. Secure Telegram API Order Action (Updated Fields)
+        // 4. Secure Telegram API Order Action (Updated Token & Chat ID)
         document.getElementById('orderForm').onsubmit = (e) => {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
@@ -245,7 +245,8 @@
             // Structured Message Body for Telegram
             const msg = `🛍️ **নতুন অর্ডার: Orderdeo.com**\n━━━━━━━━━━━━━━━━━━━━\n${pName}\n\n👤 **ক্রেতার তথ্য:**\n• নাম: ${uName}\n• ফোন: ${uPhone}\n• হোয়াটসঅ্যাপ: ${uWhatsapp}\n\n📍 **ডেলিভারি ঠিকানা:**\n• বিভাগ: ${uDiv}\n• জেলা: ${uDist}\n• উপজেলা: ${uUpazila}\n• বিস্তারিত: ${uAddr}\n━━━━━━━━━━━━━━━━━━━━`;
 
-            fetch(`https://api.telegram.org/bot8722605379:AAEXYRuqomVubbWkM2s3l_0mnYomZ0u9jk4/sendMessage`, {
+            // Updated URL with new Bot Token
+            fetch(`https://api.telegram.org/bot8950372274:AAF-09NQoebS5GDX5vWL5RIJnkFOHczoiuU/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: "6045231271", text: msg, parse_mode: 'Markdown' })
