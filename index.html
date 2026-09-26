@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orderdeo.com | Premium Shop</title>
+    <title>Orderdeo | Premium Shop</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -18,56 +18,58 @@
         .slider-container::-webkit-scrollbar { display: none; }
         .slide { min-width: 100%; scroll-snap-align: start; position: relative; }
         
-        /* Exact Card Style */
-        .product-card { background: white; border-radius: 15px; color: black; transition: 0.3s; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .product-card:hover { transform: translateY(-5px); }
+        /* Product Card Style */
+        .product-card { background: white; border-radius: 16px; color: black; transition: all 0.3s ease; position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
         
-        .discount-badge { position: absolute; top: 8px; left: 8px; background: #22c55e; color: white; padding: 2px 6px; border-radius: 6px; font-size: 11px; font-weight: bold; z-index: 10; }
-        .best-price-tag { background: #db2777; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; display: inline-block; font-weight: 600; }
+        .discount-badge { position: absolute; top: 10px; left: 10px; background: #22c55e; color: white; padding: 4px 8px; border-radius: 8px; font-size: 11px; font-weight: bold; z-index: 10; box-shadow: 0 2px 5px rgba(34,197,94,0.4); }
+        .best-price-tag { background: #db2777; color: white; font-size: 10px; padding: 3px 8px; border-radius: 6px; display: inline-block; font-weight: 600; }
         
-        .floating-call { position: fixed; bottom: 25px; right: 25px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; z-index: 100; box-shadow: 0 8px 20px rgba(0,0,0,0.3); animation: pulse 2s infinite; }
+        .floating-call { position: fixed; bottom: 25px; right: 25px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; z-index: 100; box-shadow: 0 8px 20px rgba(37,211,102,0.4); animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        /* Custom Scrollbar for Modal */
+        .modal-scroll::-webkit-scrollbar { width: 6px; }
+        .modal-scroll::-webkit-scrollbar-thumb { background: rgba(100,100,100,0.3); border-radius: 10px; }
     </style>
 </head>
 <body class="pb-24">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-[60] p-4 glass rounded-none border-0 flex justify-between items-center px-6">
-        <div class="flex items-center gap-3">
-            <!-- Logo Img Added Here -->
-            <img src="https://i.ibb.co.com/PGtpvz3f/EA975-D03-CDA9-4-A59-8-DB4-5-E217-F8-B2586.png" alt="Orderdeo Logo" class="h-10 w-auto object-contain">
-            <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300">Orderdeo.com</h1>
+    <!-- Header Update: Only Logo -->
+    <header class="sticky top-0 z-[60] p-3 glass rounded-none border-0 flex justify-between items-center px-6 backdrop-blur-xl shadow-sm">
+        <div class="flex items-center">
+            <img src="https://i.ibb.co.com/PGtpvz3f/EA975-D03-CDA9-4-A59-8-DB4-5-E217-F8-B2586.png" alt="Orderdeo Logo" class="h-12 md:h-14 w-auto object-contain drop-shadow-md">
         </div>
-        <button onclick="document.body.classList.toggle('light-mode')" class="p-2 glass rounded-full text-lg">🌓</button>
+        <button onclick="document.body.classList.toggle('light-mode')" class="p-2 glass rounded-full text-lg hover:bg-blue-500/20 transition">🌓</button>
     </header>
 
     <main class="max-w-6xl mx-auto p-4">
         
-        <!-- Dynamic Banner Slider (Controlled from Admin Panel) -->
-        <section id="bannerSlider" class="slider-container w-full h-48 md:h-72 rounded-[30px] overflow-hidden mb-8 glass border-0 shadow-2xl">
+        <!-- Dynamic Banner Slider -->
+        <section id="bannerSlider" class="slider-container w-full h-48 md:h-[350px] rounded-[30px] overflow-hidden mb-8 glass border-0 shadow-2xl">
             <div class="w-full h-full flex items-center justify-center opacity-30">ব্যানার লোড হচ্ছে...</div>
         </section>
 
         <!-- Search Bar -->
         <div class="relative mb-8">
-            <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Search your idea..." class="w-full glass p-5 pl-12 outline-none text-sm border-0 shadow-inner">
-            <span class="absolute left-5 top-5 opacity-50">🔍</span>
+            <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="পণ্য খুঁজুন..." class="w-full glass p-5 pl-14 rounded-2xl outline-none text-md border border-white/5 focus:border-blue-500/50 transition shadow-inner">
+            <span class="absolute left-6 top-5 text-lg opacity-60">🔍</span>
         </div>
 
         <!-- Categories Quick Filter -->
-        <div class="flex gap-4 overflow-x-auto pb-4 mb-4 no-scrollbar">
-            <button onclick="filterItems('')" class="glass px-6 py-2 whitespace-nowrap text-xs font-bold hover:bg-blue-600 transition">All Items</button>
-            <button onclick="filterItems('লাইট')" class="glass px-6 py-2 whitespace-nowrap text-xs font-bold hover:bg-blue-600 transition">Lights</button>
-            <button onclick="filterItems('ফ্যান')" class="glass px-6 py-2 whitespace-nowrap text-xs font-bold hover:bg-blue-600 transition">Fans</button>
-            <button onclick="filterItems('গ্যাজেট')" class="glass px-6 py-2 whitespace-nowrap text-xs font-bold hover:bg-blue-600 transition">Gadgets</button>
+        <div class="flex gap-3 overflow-x-auto pb-4 mb-5 no-scrollbar">
+            <button onclick="filterItems('')" class="glass px-6 py-2.5 rounded-xl whitespace-nowrap text-sm font-semibold hover:bg-blue-600 hover:text-white transition">All Items</button>
+            <button onclick="filterItems('লাইট')" class="glass px-6 py-2.5 rounded-xl whitespace-nowrap text-sm font-semibold hover:bg-blue-600 hover:text-white transition">Lights</button>
+            <button onclick="filterItems('ফ্যান')" class="glass px-6 py-2.5 rounded-xl whitespace-nowrap text-sm font-semibold hover:bg-blue-600 hover:text-white transition">Fans</button>
+            <button onclick="filterItems('গ্যাজেট')" class="glass px-6 py-2.5 rounded-xl whitespace-nowrap text-sm font-semibold hover:bg-blue-600 hover:text-white transition">Gadgets</button>
         </div>
 
         <!-- Product Section Title -->
-        <h2 class="text-lg font-bold mb-6 flex items-center gap-3">🛒 Latest Products <span class="h-[1px] flex-1 bg-blue-500/20"></span></h2>
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-3">🛒 লেটেস্ট প্রোডাক্টস <span class="h-[2px] flex-1 bg-gradient-to-r from-blue-500/40 to-transparent"></span></h2>
         
-        <!-- Product Grid Setup -->
-        <div id="productGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Product Grid -->
+        <div id="productGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             <!-- Products will load dynamically from Firestore -->
         </div>
     </main>
@@ -75,17 +77,62 @@
     <!-- Floating Call Button -->
     <a href="tel:01700000000" class="floating-call">📞</a>
 
-    <!-- Order Modal -->
-    <div id="orderModal" class="fixed inset-0 z-[100] hidden flex items-end md:items-center justify-center bg-black/80 backdrop-blur-md">
-        <div class="glass w-full max-w-md p-8 rounded-t-[40px] md:rounded-[40px] relative">
-            <h2 class="text-2xl font-bold mb-1 text-blue-400">অর্ডার করুন</h2>
-            <p id="targetName" class="text-sm opacity-70 mb-6"></p>
-            <form id="orderForm" class="space-y-4">
-                <input type="text" id="uName" required placeholder="আপনার নাম" class="w-full glass p-4 outline-none border-0">
-                <input type="tel" id="uPhone" required placeholder="মোবাইল নম্বর" class="w-full glass p-4 outline-none border-0">
-                <textarea id="uAddr" required placeholder="বিস্তারিত ঠিকানা (গ্রাম/পাড়া)" class="w-full glass p-4 h-24 outline-none border-0"></textarea>
-                <button type="submit" id="submitBtn" class="w-full bg-blue-600 py-4 rounded-2xl font-bold text-lg shadow-lg">অর্ডার কনফার্ম</button>
-                <button type="button" onclick="closeModal()" class="w-full text-center py-2 opacity-50 text-sm">বাতিল করুন</button>
+    <!-- Order Modal (Updated with new fields) -->
+    <div id="orderModal" class="fixed inset-0 z-[100] hidden flex items-end md:items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity">
+        <div class="glass w-full max-w-lg p-6 md:p-8 rounded-t-[30px] md:rounded-[30px] relative max-h-[90vh] overflow-y-auto modal-scroll shadow-2xl border border-white/10">
+            
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">অর্ডার কনফার্ম করুন</h2>
+                    <p id="targetName" class="text-sm font-medium mt-1 text-gray-300 bg-white/5 px-3 py-1 rounded-lg inline-block"></p>
+                </div>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white bg-white/5 p-2 rounded-full transition">✕</button>
+            </div>
+
+            <form id="orderForm" class="space-y-4 mt-6">
+                <!-- Name -->
+                <div>
+                    <label class="text-xs text-gray-400 mb-1.5 block ml-1">আপনার সম্পূর্ণ নাম *</label>
+                    <input type="text" id="uName" required placeholder="যেমন: রহিম মিয়া" class="w-full glass p-3.5 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition border border-white/5">
+                </div>
+                
+                <!-- Phone & WhatsApp Grid -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs text-gray-400 mb-1.5 block ml-1">ফোন নাম্বার *</label>
+                        <input type="tel" id="uPhone" required placeholder="017XXXXXXX" class="w-full glass p-3.5 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition border border-white/5">
+                    </div>
+                    <div>
+                        <label class="text-xs text-gray-400 mb-1.5 block ml-1">হোয়াটসঅ্যাপ নাম্বার *</label>
+                        <input type="tel" id="uWhatsapp" required placeholder="017XXXXXXX" class="w-full glass p-3.5 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition border border-white/5">
+                    </div>
+                </div>
+
+                <!-- Address Grid: Division, District, Upazila -->
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="text-xs text-gray-400 mb-1.5 block ml-1">বিভাগ *</label>
+                        <input type="text" id="uDiv" required placeholder="বিভাগ" class="w-full glass p-3.5 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition border border-white/5 text-sm">
+                    </div>
+                    <div>
+                        <label class="text-xs text-gray-400 mb-1.5 block ml-1">জেলা *</label>
+                        <input type="text" id="uDist" required placeholder="জেলা" class="w-full glass p-3.5 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition border border-white/5 text-sm">
+                    </div>
+                    <div>
+                        <label class="text-xs text-gray-400 mb-1.5 block ml-1">উপজেলা *</label>
+                        <input type="text" id="uUpazila" required placeholder="উপজেলা" class="w-full glass p-3.5 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 transition border border-white/5 text-sm">
+                    </div>
+                </div>
+
+                <!-- Detailed Address -->
+                <div>
+                    <label class="text-xs text-gray-400 mb-1.5 block ml-1">বিস্তারিত ঠিকানা *</label>
+                    <textarea id="uAddr" required placeholder="গ্রাম/মহল্লা, রাস্তার নাম, বাড়ির নম্বর" class="w-full glass p-3.5 rounded-xl h-24 outline-none focus:ring-2 focus:ring-blue-500 transition border border-white/5 resize-none"></textarea>
+                </div>
+                
+                <div class="pt-2">
+                    <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-blue-600 to-cyan-500 py-4 rounded-xl font-bold text-lg text-white shadow-[0_4px_15px_rgba(37,99,235,0.3)] hover:shadow-[0_4px_25px_rgba(37,99,235,0.5)] transition duration-300">অর্ডার সাবমিট করুন</button>
+                </div>
             </form>
         </div>
     </div>
@@ -118,15 +165,15 @@
             snap.forEach(d => {
                 slider.innerHTML += `
                     <div class="slide h-full">
-                        <img src="${d.data().url}" class="w-full h-full object-cover opacity-80">
-                        <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent flex flex-col justify-center px-10">
-                            <h2 class="text-2xl md:text-3xl font-bold text-white leading-tight">সেরা কোয়ালিটির প্রোডাক্ট <br>এখন Orderdeo.com এ!</h2>
+                        <img src="${d.data().url}" class="w-full h-full object-cover opacity-90">
+                        <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent flex flex-col justify-center px-10">
+                            <h2 class="text-3xl md:text-4xl font-bold text-white leading-tight">সেরা কোয়ালিটির প্রোডাক্ট <br><span class="text-cyan-400">Orderdeo.com</span> এ!</h2>
                         </div>
                     </div>`;
             });
         });
 
-        // Auto Slider Animation (5 seconds interval)
+        // Auto Slider Animation
         setInterval(() => {
             const s = document.getElementById('bannerSlider');
             if(s.scrollLeft >= (s.scrollWidth - s.clientWidth)) { s.scrollTo({left: 0, behavior: 'smooth'}); }
@@ -144,20 +191,20 @@
                 grid.innerHTML += `
                     <div class="product-card group" data-name="${p.name.toLowerCase()}">
                         ${discount > 0 ? `<div class="discount-badge">-${discount}%</div>` : ''}
-                        <div class="h-44 bg-white flex items-center justify-center p-2 rounded-t-xl overflow-hidden">
-                            <img src="${p.img}" class="w-full h-full object-contain group-hover:scale-105 transition duration-300">
+                        <div class="h-48 bg-gray-50 flex items-center justify-center p-3 rounded-t-2xl overflow-hidden relative">
+                            <img src="${p.img}" class="w-full h-full object-contain group-hover:scale-110 transition duration-500">
                         </div>
-                        <div class="p-3 bg-white">
-                            <span class="best-price-tag">Best Price</span>
-                            <h3 class="text-xs font-bold text-slate-800 truncate mt-1">${p.name}</h3>
-                            <div class="flex items-center gap-2 mt-1">
-                                <span class="text-pink-600 font-bold text-sm">৳ ${p.price}</span>
-                                ${p.oldPrice ? `<span class="text-gray-400 line-through text-[10px]">৳ ${p.oldPrice}</span>` : ''}
+                        <div class="p-4 bg-white">
+                            <span class="best-price-tag mb-1">Best Price</span>
+                            <h3 class="text-sm font-bold text-slate-800 truncate" title="${p.name}">${p.name}</h3>
+                            <div class="flex items-center gap-2 mt-1.5">
+                                <span class="text-blue-600 font-extrabold text-lg">৳ ${p.price}</span>
+                                ${p.oldPrice ? `<span class="text-gray-400 line-through text-xs font-medium">৳ ${p.oldPrice}</span>` : ''}
                             </div>
-                            <div class="text-[10px] text-yellow-500 font-medium mt-1">
+                            <div class="text-[11px] text-yellow-500 font-medium mt-1">
                                 ⭐ 5/5 (0) - 0 Sold
                             </div>
-                            <button onclick="window.triggerOrder('${p.name}')" class="w-full bg-blue-600 text-white mt-3 py-2 rounded-lg text-xs font-bold uppercase hover:bg-slate-900 transition">Order</button>
+                            <button onclick="window.triggerOrder('${p.name}')" class="w-full bg-slate-900 text-white mt-4 py-2.5 rounded-xl text-sm font-bold hover:bg-blue-600 transition duration-300">অর্ডার করুন</button>
                         </div>
                     </div>`;
             });
@@ -165,7 +212,7 @@
 
         // 3. User Interface Control
         window.triggerOrder = (name) => {
-            document.getElementById('targetName').innerText = name;
+            document.getElementById('targetName').innerText = `📦 পণ্য: ${name}`;
             document.getElementById('orderModal').classList.remove('hidden');
         };
 
@@ -178,14 +225,25 @@
             });
         };
 
-        // 4. Secure Telegram API Order Action
+        // 4. Secure Telegram API Order Action (Updated Fields)
         document.getElementById('orderForm').onsubmit = (e) => {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             btn.innerText = "অর্ডার প্রসেস হচ্ছে...";
             btn.disabled = true;
 
-            const msg = `🛍️ **নতুন অর্ডার**\n━━━━━━━━━━━━\n📦 পণ্য: ${document.getElementById('targetName').innerText}\n👤 নাম: ${document.getElementById('uName').value}\n📞 ফোন: ${document.getElementById('uPhone').value}\n📍 ঠিকানা: ${document.getElementById('uAddr').value}\n━━━━━━━━━━━━`;
+            // Fetching all new inputs
+            const pName = document.getElementById('targetName').innerText;
+            const uName = document.getElementById('uName').value;
+            const uPhone = document.getElementById('uPhone').value;
+            const uWhatsapp = document.getElementById('uWhatsapp').value;
+            const uDiv = document.getElementById('uDiv').value;
+            const uDist = document.getElementById('uDist').value;
+            const uUpazila = document.getElementById('uUpazila').value;
+            const uAddr = document.getElementById('uAddr').value;
+
+            // Structured Message Body for Telegram
+            const msg = `🛍️ **নতুন অর্ডার: Orderdeo.com**\n━━━━━━━━━━━━━━━━━━━━\n${pName}\n\n👤 **ক্রেতার তথ্য:**\n• নাম: ${uName}\n• ফোন: ${uPhone}\n• হোয়াটসঅ্যাপ: ${uWhatsapp}\n\n📍 **ডেলিভারি ঠিকানা:**\n• বিভাগ: ${uDiv}\n• জেলা: ${uDist}\n• উপজেলা: ${uUpazila}\n• বিস্তারিত: ${uAddr}\n━━━━━━━━━━━━━━━━━━━━`;
 
             fetch(`https://api.telegram.org/bot8722605379:AAEXYRuqomVubbWkM2s3l_0mnYomZ0u9jk4/sendMessage`, {
                 method: 'POST',
@@ -194,9 +252,13 @@
             }).then(() => {
                 alert("আপনার অর্ডারটি সফলভাবে সাবমিট হয়েছে!");
                 closeModal();
-                btn.innerText = "অর্ডার কনফার্ম";
+                btn.innerText = "অর্ডার সাবমিট করুন";
                 btn.disabled = false;
                 document.getElementById('orderForm').reset();
+            }).catch(() => {
+                alert("ইন্টারনেট সমস্যা! আবার চেষ্টা করুন।");
+                btn.innerText = "অর্ডার সাবমিট করুন";
+                btn.disabled = false;
             });
         };
     </script>
